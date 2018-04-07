@@ -2,26 +2,49 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.4.
 
-## Development server
+## Structure Blueprint
+`app.module.ts
+app.component.ts
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+modules
+1) planner
+	components
+		budget-template
+			- calculates how to divide equally on target credit frequency
+			- target credit frequency property
+			- input prop - disposable income, savings, total  income, total bills based on credit frequency, income - bill
+			- uses bill-entry shared component
+		budget-ledger
+			- based on budget template but will - allow users to pay and set date of payment
+			- uses bill-payment-entry shared component
+		monthly-budget
+		fornighty-budget
+		income - source of debits
+	pages
+		planner.page.component.ts
 
-## Code scaffolding
+	planner.service.ts - handles domain model objects for planner
+	planner.module.ts
+	planner.routes.ts
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+2) public
+	pages
+		home.page.component.ts
+		about.page.components.ts
+	public.service.ts
+	public.module.ts
+	public.routes.ts
 
-## Build
+3) settings
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
-## Running unit tests
+shared
+	1) models
+		bill
+			bill - simple js class - domain model object
+				- props, description, value, enum (reserve, payment), payment to?, due date?
+			credit-frequencies-enum - yearly, monthly, fortnightly, weekly			bill interface
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+	2) components
+		bill-entry -
+		bill-payment-entry - `
