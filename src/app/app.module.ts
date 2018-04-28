@@ -3,14 +3,15 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-
+import { BudgetPlannerModule } from './budget-planner/budget-planner.module';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BudgetPlannerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
