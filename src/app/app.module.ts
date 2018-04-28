@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { BudgetPlannerModule } from './budget-planner/budget-planner.module';
@@ -11,6 +11,7 @@ import { BudgetPlannerModule } from './budget-planner/budget-planner.module';
   ],
   imports: [
     BrowserModule,
+    FlexLayoutModule,
     BudgetPlannerModule,
   ],
   providers: [],
