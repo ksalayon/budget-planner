@@ -8,11 +8,11 @@ import { BudgetLedgerComponent } from './components/budget-ledger/budget-ledger.
 import { BudgetPlannerComponent } from './budget-planner.component';
 import { BudgetEntryComponent } from './components/budget-entry/budget-entry.component';
 import { BudgetPlanComponent } from './components/budget-plan/budget-plan.component';
-import { BudgetPlanService } from  './services/adapters/budget-plan.service';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryData }  from './services/vendor/in-memory-data';
 import { BudgetPlannerApiService } from './services/api/budget-planner-api.service';
+import { BudgetPlanAdapterService } from './services/adapters/budget-plan-adapter.service';
 
 @NgModule({
   imports: [
@@ -35,7 +35,7 @@ import { BudgetPlannerApiService } from './services/api/budget-planner-api.servi
   ],
   providers: [
     BudgetPlannerApiService,
-    BudgetPlanService
+    BudgetPlanAdapterService
   ],
   bootstrap:[BudgetPlannerComponent]
 })

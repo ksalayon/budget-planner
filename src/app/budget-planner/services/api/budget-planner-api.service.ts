@@ -13,16 +13,22 @@ const httpOptions = {
 @Injectable()
 export class BudgetPlannerApiService {
 
-  private budgetPlannerUrl = 'api/budget_plans';
+  private budgetPlansUrl = 'api/budget_plans';
+  private budgetTemplateUrl = 'api/budget_templates';
 
   constructor(private http: HttpClient) { }
 
   getPlans (): Observable<BudgetPlan[]> {
-    return this.http.get<BudgetPlan[]>(this.budgetPlannerUrl);
+    return this.http.get<BudgetPlan[]>(this.budgetPlansUrl);
   }
 
   getTemplates (): Observable<BudgetTemplate[]> {
-    return this.http.get<BudgetTemplate[]>(this.budgetPlannerUrl);
+    return this.http.get<BudgetTemplate[]>(this.budgetTemplateUrl);
+  }
+
+  getDefaultTemplate(): Observable<BudgetTemplate[]> {
+    const url = `${this.budgetTemplateUrl}/?default=true`;
+    return this.http.get<BudgetTemplate[]>(url);
   }
 
 }

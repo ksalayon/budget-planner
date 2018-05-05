@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BudgetPlanService } from '../../services/adapters/budget-plan.service';
-
+import { Observable } from 'rxjs/Observable';
+import { forkJoin } from "rxjs/observable/forkJoin";
+import { BudgetPlanAdapterService } from '../../services/adapters/budget-plan-adapter.service';
 
 @Component({
   selector: 'app-budget-plan',
@@ -9,13 +10,23 @@ import { BudgetPlanService } from '../../services/adapters/budget-plan.service';
 })
 export class BudgetPlanComponent implements OnInit {
 
-  constructor(private budgetPlanService: BudgetPlanService) { }
+  constructor(private budgetPlanAdapter: BudgetPlanAdapterService) { }
 
   ngOnInit() {
-    this.budgetPlanService.getPlans().subscribe(
-      plans => {
-        console.log('the budget plans: ', plans)
-      }
+    forkJoin(
+      this.budgetPlanAdapter.getPlans(),
+      this.budgetPlanAdapter.getTemplates(),
+      this.budgetPlanAdapter.getDefaultTemplate()
+    ).subscribe(
+      ([plans, templates, defaultTemplate]) => {
+        console.log('the budget plans: ', plans);
+        console.log('the budget templates: ', templates);
+        console.log('the default template: ', defaultTemplate);
+      },
+      e => {
+        console.log('error at fork: ', e);
+      },
+      () => console.log('completed forkJoin')
     )
   }
 

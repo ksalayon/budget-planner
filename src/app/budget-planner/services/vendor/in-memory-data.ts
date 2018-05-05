@@ -23,7 +23,7 @@ export class InMemoryData implements InMemoryDbService {
     ]
 
     const budget_templates = [
-      { id:1, bill_entries: bill_entries, income_entries: income_entries}
+      { id:1, title: `My default template`, default: true, bill_entries: bill_entries, income_entries: income_entries}
     ];
 
     const budget_plans = [{

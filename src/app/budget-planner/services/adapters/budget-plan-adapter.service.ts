@@ -7,13 +7,14 @@ import { BudgetPlan } from '../../models/budget-plan';
 import { BudgetPlannerApiService } from '../api/budget-planner-api.service';
 import { Subscription } from 'rxjs/Subscription';
 import { BudgetTemplate } from '../../models/budget-template';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 @Injectable()
-export class BudgetPlanService {
+export class BudgetPlanAdapterService {
 
   private budgetPlanUrl = 'api/budget_plans';
 
@@ -30,9 +31,24 @@ export class BudgetPlanService {
   getTemplates (): Observable<BudgetTemplate[]> {
     return this.budgetPlannerApi.getTemplates()
       .pipe(
-        tap(plans => this.log(`fetched templates`)),
+        tap(templates => this.log(`fetched templates`)),
         catchError(this.handleError('getTemplates', []))
       );
+  }
+
+  getDefaultTemplate (): Observable<BudgetTemplate> {
+    var subject = new BehaviorSubject(new BudgetTemplate());
+
+    this.budgetPlannerApi.getDefaultTemplate()
+      .subscribe(
+        templates => {
+          subject.next(templates[0]);
+          subject.complete();
+        },
+        e => subject.error(e)
+      );
+
+      return subject.asObservable();
   }
 
   private log(message: String): void {
