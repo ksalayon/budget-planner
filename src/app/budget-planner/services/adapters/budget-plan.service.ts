@@ -3,7 +3,10 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BudgetPlan } from '../models/budget-plan';
+import { BudgetPlan } from '../../models/budget-plan';
+import { BudgetPlannerApiService } from '../api/budget-planner-api.service';
+import { Subscription } from 'rxjs/Subscription';
+import { BudgetTemplate } from '../../models/budget-template';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,12 +15,29 @@ const httpOptions = {
 @Injectable()
 export class BudgetPlanService {
 
-  private budgetPlanUrl = 'api/budget-plan';
+  private budgetPlanUrl = 'api/budget_plans';
 
-  constructor(private http: HttpClient) { }
+  constructor(private budgetPlannerApi: BudgetPlannerApiService) { }
 
   getPlans (): Observable<BudgetPlan[]> {
-    return this.http.get<BudgetPlan[]>(this.budgetPlanUrl);
+    return this.budgetPlannerApi.getPlans()
+      .pipe(
+        tap(plans => this.log(`fetched plans`)),
+        catchError(this.handleError('getPlans', []))
+      );
+  }
+
+  getTemplates (): Observable<BudgetTemplate[]> {
+    return this.budgetPlannerApi.getTemplates()
+      .pipe(
+        tap(plans => this.log(`fetched templates`)),
+        catchError(this.handleError('getTemplates', []))
+      );
+  }
+
+  private log(message: String): void {
+    //TODO: Create better logging service
+    console.log(message);
   }
 
   /**
@@ -39,4 +59,5 @@ export class BudgetPlanService {
       return of(result as T);
     };
   }
+
 }

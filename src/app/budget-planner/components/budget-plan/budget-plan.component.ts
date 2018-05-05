@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BudgetPlanService } from '../../services/budget-plan.service';
+import { BudgetPlanService } from '../../services/adapters/budget-plan.service';
 
 
 @Component({

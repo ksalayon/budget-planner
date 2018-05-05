@@ -22,18 +22,20 @@ export class InMemoryData implements InMemoryDbService {
       { id: 1, title: `Mom's Salary`, description: `Mom's fortnightly salary`, value: 100000, entry_type: EntryType.Debit, paid_to: '', paid_amount: 0},
     ]
 
-    const budget_template = { bill_entries: bill_entries, income_entries: income_entries};
+    const budget_templates = [
+      { id:1, bill_entries: bill_entries, income_entries: income_entries}
+    ];
 
     const budget_plans = [{
       id: 1,
       range: BudgetIntervals.Fornightly,
       start_date: `2018-05-09T00:00:00`,
-      template: budget_template,
+      template: budget_templates[0],
       bill_entries: [],
       income_entries: []
-    }]
+    }];
 
-    return {budget_plans};
+    return {budget_plans, budget_templates};
   }
 
 }

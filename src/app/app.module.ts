@@ -1,9 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryData }  from './budget-planner/services/vendor/in-memory-data';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { BudgetPlannerModule } from './budget-planner/budget-planner.module';
@@ -19,10 +17,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     BrowserModule,
     FlexLayoutModule,
     BudgetPlannerModule,
-    AppRoutingModule,
-    // HttpClientInMemoryWebApiModule.forRoot(
-    //   InMemoryData, { dataEncapsulation: false }
-    // )
+    HttpClientModule,
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
