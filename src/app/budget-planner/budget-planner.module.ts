@@ -13,6 +13,9 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryData }  from './services/vendor/in-memory-data';
 import { BudgetPlannerApiService } from './services/api/budget-planner-api.service';
 import { BudgetPlanAdapterService } from './services/adapters/budget-plan-adapter.service';
+import { BudgetPlansTableComponent } from './components/budget-plans-table/budget-plans-table.component';
+
+import { MatTableModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -21,17 +24,20 @@ import { BudgetPlanAdapterService } from './services/adapters/budget-plan-adapte
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryData, { dataEncapsulation: false }
-    )
+    ),
+    MatTableModule
   ],
   declarations: [
     BudgetTemplateComponent,
     BudgetLedgerComponent,
     BudgetPlannerComponent,
     BudgetEntryComponent,
-    BudgetPlanComponent
+    BudgetPlanComponent,
+    BudgetPlansTableComponent
   ],
   exports: [
-    BudgetPlannerComponent
+    BudgetPlannerComponent,
+    BudgetPlansTableComponent
   ],
   providers: [
     BudgetPlannerApiService,
