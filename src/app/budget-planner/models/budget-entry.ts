@@ -6,7 +6,7 @@ enum EntryType {
 enum BudgetIntervals {
   Weekly = 'weekly',
   Fornightly = 'fortnightly',
-  Monthyl = 'monthly'
+  Monthly = 'monthly'
 }
 
 class BudgetEntry {

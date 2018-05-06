@@ -4,6 +4,10 @@
       <mat-header-cell *matHeaderCellDef> Start date </mat-header-cell>
       <mat-cell *matCellDef="let budgetPlan"> {{budgetPlan.startDate}} </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="endDate">
+      <mat-header-cell *matHeaderCellDef> End date </mat-header-cell>
+      <mat-cell *matCellDef="let budgetPlan"> {{budgetPlan.endDate}} </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="range">
       <mat-header-cell *matHeaderCellDef> Range </mat-header-cell>
       <mat-cell *matCellDef="let budgetPlan"> {{budgetPlan.range}} </mat-cell>

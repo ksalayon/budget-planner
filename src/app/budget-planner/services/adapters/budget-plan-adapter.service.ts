@@ -8,6 +8,8 @@ import { BudgetPlannerApiService } from '../api/budget-planner-api.service';
 import { Subscription } from 'rxjs/Subscription';
 import { BudgetTemplate } from '../../models/budget-template';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import * as moment from 'moment';
+import { BudgetIntervals } from '../../models/budget-entry';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -21,11 +23,41 @@ export class BudgetPlanAdapterService {
   constructor(private budgetPlannerApi: BudgetPlannerApiService) { }
 
   getPlans (): Observable<BudgetPlan[]> {
-    return this.budgetPlannerApi.getPlans()
-      .pipe(
-        tap(plans => this.log(`fetched plans`)),
-        catchError(this.handleError('getPlans', []))
+    const subject = new BehaviorSubject([]);
+    this.budgetPlannerApi.getPlans()
+      .subscribe(
+        plans => {
+          let mappedPlans = [...plans];
+          // TODO: Ceate a separate util service to convert dates to momentjs types
+          mappedPlans = mappedPlans.map(bp => {
+            let endDate = '';
+            switch(bp.range) {
+              case BudgetIntervals.Weekly:
+                endDate = moment(bp.startDate).add(1, 'week').format();
+              break;
+
+              case BudgetIntervals.Fornightly:
+                endDate = moment(bp.startDate).add(2, 'weeks').format();
+              break;
+
+              case BudgetIntervals.Monthly:
+                endDate = moment(bp.startDate).add(1, 'month').format();
+              break;
+            }
+            bp.endDate = endDate;
+            bp.startDate = moment(bp.startDate).format();
+            return bp;
+          });
+
+          subject.next(plans);
+        },
+        e => {
+          subject.error(e);
+        },
+        () => subject.complete()
       );
+
+    return subject.asObservable();
   }
 
   getTemplates (): Observable<BudgetTemplate[]> {
